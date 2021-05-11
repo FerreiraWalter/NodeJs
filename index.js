@@ -1,0 +1,25 @@
+/**
+ * const express = cria uma função com todos os dados do EXPRESS
+ * const app = cria um cópia do EXPRESS (principal do nosso sistema)
+ * EXPRESS é um framework orientado a rotas
+ */
+
+const express = require("express");
+const app = express();
+
+app.get("/", function(req, res) {
+    res.send("Seja bem vindo ao meu app!")
+});
+
+app.get("/sobre", function(req, res){
+    res.send("Minha página sobre")
+});
+
+app.get("/blog", function(req, res){
+    res.send("Bem-vindo ao meu blog!")
+});
+
+
+app.listen(8081, function(){
+    console.log("Servidor Rodando!")
+});
