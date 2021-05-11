@@ -19,6 +19,10 @@ app.get("/blog", function(req, res){
     res.send("Bem-vindo ao meu blog!")
 });
 
+app.get("/ola/:nome/:cargo", function(req, res){
+    res.send("Olá, " + req.params.nome + ", você é " + req.params.cargo)
+});
+
 
 app.listen(8081, function(){
     console.log("Servidor Rodando!")
