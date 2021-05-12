@@ -6,23 +6,19 @@
 
 const express = require("express");
 const app = express();
+const handlebars = require("express-handlebars");
+const Sequelize = require("sequelize");
 
-app.get("/", function(req, res) {
-    res.sendFile(__dirname+"/html/index.html");
-});
 
-app.get("/sobre", function(req, res){
-    res.sendFile(__dirname + "/html/sobre.html");
-});
-
-app.get("/blog", function(req, res){
-    res.send("Bem-vindo ao meu blog!");
-});
-
-app.get("/ola/:nome/:cargo", function(req, res){
-    res.send("Olá, " + req.params.nome + ", você é " + req.params.cargo);
-});
-
+// Config
+    // Template Engine
+    app.engine("handlebars", handlebars({defaultLayout: 'main'}));
+    app.set('view engine', 'handlebars');
+    // Conexão com o banco de dados Mysql
+    const sequelize = new Sequelize('cadastrousuario', 'root', '', {
+        host: "localhost",
+        dialect: "mysql"
+    });
 
 app.listen(8081, function(){
     console.log("Servidor Rodando!")
