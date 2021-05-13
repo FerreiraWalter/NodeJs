@@ -1,1 +1,9 @@
-<h1>Baliter é muito lindo!</h1>
+<h1>Lista de posts:</h1>
+
+{{#each posts}}
+    <small>{{createdAt}}</small>
+    <h1>{{titulo}}</h1>
+    <p>{{conteudo}}</p>
+    <button>Deletar</button>
+    <hr>
+{{/each}}

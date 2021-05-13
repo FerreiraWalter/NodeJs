@@ -11,8 +11,15 @@ const bodyParser = require("body-parser");
 const Post = require("./models/Post");
 
 // Config
-    // Template Engine
-    app.engine("handlebars", handlebars({defaultLayout: 'main'}));
+    // Template Engine (Lembra o Blade do Laravel)
+    app.engine("handlebars", handlebars({
+        defaultLayout: 'main',
+        // Peguei essa parte no StackOverflow
+        runtimeOptions: {
+            allowProtoPropertiesByDefault: true,
+            allowProtoMethodsByDefault: true
+        }
+    }));
     app.set('view engine', 'handlebars');
 
     // BodyParser
@@ -20,12 +27,16 @@ const Post = require("./models/Post");
     app.use(bodyParser.json());
 
 // Rotas
-
     app.get('/', function(req, res) {
-        res.render("home");
+        // .all() pega todos os dados da tabela
+        Post.findAll({order: [['id', 'DESC']]}).then(function(posts) {
+            // Vai passar toda tabela para página home (posts)
+            res.render("home", {posts: posts});
+        });
     });
 
     app.get('/cad', function(req, res) {
+        // .render carrega uma página HTML criada
         res.render('formulario');
     });
 
@@ -33,10 +44,10 @@ const Post = require("./models/Post");
         Post.create({
             titulo: req.body.titulo,
             conteudo: req.body.conteudo
-        }).then(function(){
-            res.send("Post criado com sucesso!")
-        }).catch(function(erro){
-            res.send("Ocorreu um erro: " + erro)
+        }).then(function(){ // Se der tudo certo volta para página principal
+            res.redirect('/');
+        }).catch(function(erro){ // Mano deu erro aqui!
+            res.send("Ocorreu um erro: " + erro);
         });
     });
 
