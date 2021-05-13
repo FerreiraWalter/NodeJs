@@ -51,6 +51,16 @@ const Post = require("./models/Post");
         });
     });
 
+    app.get('/deletar/:id', function(req, res) {
+        Post.destroy({where: { // Deletando onde o id = ?
+            'id': req.params.id
+        }}).then(function() {
+            res.send("Postagem deletada com sucesso!");
+        }).catch(function(erro) {
+            res.send("Esta postagem não existe!");
+        });
+    });
+
 // Iniciando o servidor na porta 8081
 app.listen(8081, function(){
     console.log("Servidor Rodando!");
